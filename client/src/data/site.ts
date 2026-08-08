@@ -10,6 +10,11 @@ export const site = {
   linkedin: "https://www.linkedin.com/company/14494510/",
   founded: 2018,
   logo: "/img/company_logo_tr.png",
+  // Calendly's free plan covers this fully: unlimited bookings on one event
+  // type, no cost. Sign up free at https://calendly.com, create a "Discovery
+  // Call" event type, then replace this placeholder with your real link
+  // (Account → Event Types → the event's own page → Copy link).
+  bookingUrl: "https://calendly.com/prama-ai/discovery-call",
 };
 
 export const navLinks = [
