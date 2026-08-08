@@ -26,6 +26,8 @@ type Card =
       name: string;
       category: string;
       accent: string;
+      badgeColor: string;
+      badgeColorDark: string;
       emoji: string;
       offerings: string[];
     };
@@ -47,6 +49,8 @@ const cards: Card[] = [
     name: p.name,
     category: p.category,
     accent: p.accent,
+    badgeColor: p.badgeColor,
+    badgeColorDark: p.badgeColorDark,
     emoji: p.emoji,
     offerings: p.badges.slice(0, 3),
   })),
@@ -117,10 +121,9 @@ export default function LiveCapabilityWindow() {
             </div>
           ) : (
             <span
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-2xl"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl shadow-md"
               style={{
-                background: `${accent}1a`,
-                borderColor: `${accent}55`,
+                background: `linear-gradient(135deg, ${(card as Extract<Card, { kind: "product" }>).badgeColor}, ${(card as Extract<Card, { kind: "product" }>).badgeColorDark})`,
               }}
             >
               {(card as Extract<Card, { kind: "product" }>).emoji}

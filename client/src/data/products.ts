@@ -7,6 +7,9 @@ export type Product = {
   description: string[];
   url: string;
   accent: string; // hex
+  accentDark: string; // darker partner shade, used for hero gradients
+  badgeColor: string; // distinct colour per product for the emoji badge — deliberately
+  badgeColorDark: string; // different from `accent`, so AccFino/TalentIQ/MindKaar don't all read as "blue"
   emoji: string; // shown consistently everywhere this product appears
   badges: string[]; // short capability pills, hero-style
   stats: { value: string; label: string }[]; // 3-stat highlight strip
@@ -21,7 +24,7 @@ export const products: Product[] = [
     slug: "accfino",
     name: "AccFino",
     category: "Fintech · Accounting AI",
-    emoji: "💰",
+    emoji: "🧾",
     tagline: "Accounting that thinks ahead of your books",
     summary:
       "An AI-native accounting platform for Australian small business — reconciliation, cash-flow forecasting, and crypto CGT in one login.",
@@ -32,6 +35,9 @@ export const products: Product[] = [
     ],
     url: "https://www.accfino.com",
     accent: "#395194",
+    accentDark: "#192442",
+    badgeColor: "#d6a553",
+    badgeColorDark: "#6b5229",
     badges: ["AI Reconciliation", "ML Forecasting", "Crypto CGT", "Open Banking"],
     stats: [
       { value: "95%", label: "Transactions auto-classified" },
@@ -50,7 +56,7 @@ export const products: Product[] = [
     slug: "talentiq",
     name: "TalentIQ",
     category: "HR Tech · Talent Intelligence",
-    emoji: "🎯",
+    emoji: "⚡",
     tagline: "AI-powered job hunting and candidate intelligence",
     summary:
       "A talent intelligence platform that pairs job-market analytics with AI-assisted candidate search, built for recruiters and job seekers alike.",
@@ -60,6 +66,9 @@ export const products: Product[] = [
     ],
     url: "https://talentiq.prama-ai.com",
     accent: "#2a4a8f",
+    accentDark: "#122140",
+    badgeColor: "#3689ed",
+    badgeColorDark: "#1b4476",
     badges: ["AI Candidate Search", "Market Intelligence", "Job-Seeker Copilot"],
     stats: [
       { value: "3x", label: "Faster candidate shortlisting" },
@@ -77,7 +86,7 @@ export const products: Product[] = [
     slug: "mindkaar",
     name: "MindKaar",
     category: "Wellbeing · Applied AI",
-    emoji: "🧘",
+    emoji: "🧠",
     tagline: "A mind gym for everyday mental fitness",
     summary:
       "A guided mental-fitness platform — structured exercises and progress tracking that treat the mind like something you train, not just something you rest.",
@@ -87,6 +96,9 @@ export const products: Product[] = [
     ],
     url: "https://mindkaar.prama-ai.com",
     accent: "#4d68ad",
+    accentDark: "#222e4d",
+    badgeColor: "#3eb3d6",
+    badgeColorDark: "#7f69f1",
     badges: ["Guided Sessions", "Adaptive Plans", "Progress Tracking"],
     stats: [
       { value: "Daily", label: "Adaptive session plans" },

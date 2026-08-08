@@ -23,8 +23,8 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative flex-1">
         <div className="flex items-center justify-between">
           <div
-            className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-sm"
-            style={{ background: `${product.accent}22`, border: `1px solid ${product.accent}55` }}
+            className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-md"
+            style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
             aria-hidden
           >
             {product.emoji}
