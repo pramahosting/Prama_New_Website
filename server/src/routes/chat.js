@@ -25,13 +25,16 @@ IP-rich accelerators and reusable ML models that save 30-40% of delivery effort 
 from scratch.
 
 PRODUCT PORTFOLIO (live products built and run by Prama AI):
-- AccFino (www.accfino.com): AI-native accounting platform for Australian small business — AI
-  bank reconciliation, ML cash-flow forecasting, crypto & equity CGT, open banking, GST
-  invoicing. Grew out of Prama AI's earlier SAAR expense-classification engine.
-- TalentIQ (talentiq.prama-ai.com): AI-powered job hunting, market intelligence and candidate
-  search platform for recruiters and job seekers.
-- MindKaar (mindkaar.prama-ai.com): a "mind gym" — guided mental-fitness sessions and adaptive
-  progress tracking.
+- AccFino (www.accfino.com): AI-native accounting platform for Australian small business — Groq
+  LLM + Ripple Down Rules bank reconciliation, a leaderboard of ML models for cash-flow
+  forecasting, crypto & equity CGT, open banking, and smart lending readiness analysis. Grew out
+  of Prama AI's earlier SAAR expense-classification engine.
+- TalentIQ (talentiq.prama-ai.com): three AI agents in one platform — JobHunt (resume-to-job
+  matching with ATS scoring), JobIntel (a LangChain market-intelligence agent), and LinkLens
+  (LinkedIn candidate search at scale via Playwright).
+- MindKaar (mindkaar.prama-ai.com): a "mind gym" — a deterministic 6-domain wellbeing assessment
+  paired with progressive mini-games, plus a live voice-roleplay simulation with an emotionally
+  reactive AI character.
 
 COMPANY: Founded 2018, HQ at 11 York Street, Sydney NSW 2000, Australia. 20+ developers and
 architects, 50+ years combined open-source & cloud experience. Contact: info@prama-ai.com.
@@ -40,7 +43,10 @@ If asked something outside this scope (legal, pricing guarantees, or anything yo
 say you don't have that detail and suggest the contact form or info@prama-ai.com. Never make up
 statistics, client names, or prices that aren't listed above.`;
 
-const MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5";
+// Groq deprecated the llama-3.x chat models (announced June 2026); this default
+// is the currently-recommended replacement. Override with GROQ_MODEL if needed —
+// see https://console.groq.com/docs/models for the current list.
+const MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
 router.post("/chat", async (req, res) => {
   const { messages, sessionId } = req.body ?? {};
@@ -48,7 +54,7 @@ router.post("/chat", async (req, res) => {
   if (!Array.isArray(messages) || messages.length === 0) {
     return res.status(400).json({ error: "messages array required" });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GROQ_API_KEY) {
     return res.status(503).json({ error: "Concierge is not configured on this deployment yet." });
   }
 
@@ -58,33 +64,32 @@ router.post("/chat", async (req, res) => {
   }));
 
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    // Groq's Chat Completions API is OpenAI-compatible: the system prompt is
+    // just the first message in the array (unlike Anthropic's separate
+    // top-level `system` field), and the reply comes back as
+    // choices[0].message.content rather than a content-blocks array.
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
+        authorization: `Bearer ${process.env.GROQ_API_KEY}`,
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 500,
-        system: SYSTEM_PROMPT,
-        messages: trimmed,
+        max_completion_tokens: 500,
+        temperature: 0.6,
+        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...trimmed],
       }),
     });
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error("[chat] Anthropic API error:", response.status, errText);
+      console.error("[chat] Groq API error:", response.status, errText);
       return res.status(502).json({ error: "Concierge is temporarily unavailable." });
     }
 
     const data = await response.json();
-    const reply = (data.content || [])
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
-      .join("\n")
-      .trim() || "Sorry, I don't have an answer for that right now.";
+    const reply = data.choices?.[0]?.message?.content?.trim() || "Sorry, I don't have an answer for that right now.";
 
     res.status(200).json({ reply });
 

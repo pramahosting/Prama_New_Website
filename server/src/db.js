@@ -4,11 +4,29 @@ const { Pool } = pg;
 
 let pool = null;
 
+// pg has a known conflict when a connection string includes `?sslmode=require`
+// (as Neon's own connection strings do) *and* code also passes an explicit
+// `ssl` config object: the two collide and `ssl` can end up as the raw string
+// "require" instead of an object, crashing on `'key' in self.ssl` inside
+// pg's connection.js. Stripping the sslmode/ssl query params here means our
+// explicit `ssl: { rejectUnauthorized: false }` below is the only thing
+// controlling TLS, with no ambiguity.
+function sanitizeConnectionString(url) {
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.delete("sslmode");
+    parsed.searchParams.delete("ssl");
+    return parsed.toString();
+  } catch {
+    return url; // not a parseable URL — pass through unchanged rather than fail
+  }
+}
+
 export function getPool() {
   if (!process.env.DATABASE_URL) return null;
   if (!pool) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: sanitizeConnectionString(process.env.DATABASE_URL),
       ssl: { rejectUnauthorized: false }, // required for Neon
       max: 5,
       idleTimeoutMillis: 30_000,
