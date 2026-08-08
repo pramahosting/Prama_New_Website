@@ -58,7 +58,7 @@ export default function Contact() {
                 <div>
                   <h3 className="font-mono text-[11px] uppercase tracking-wider text-slate-dim">Prefer to chat?</h3>
                   <p className="mt-1 text-sm text-slate">
-                    Use the "Ask Prama AI" concierge in the bottom corner for a quick answer on any
+                    Use the "Ask" concierge in the bottom corner for a quick answer on any
                     of our services.
                   </p>
                 </div>

@@ -7,7 +7,7 @@ type Msg = { role: "user" | "assistant"; content: string };
 const STARTER: Msg = {
   role: "assistant",
   content:
-    "Hi, I'm the Prama AI concierge. Ask me about AI solutions, data solutions, generative AI & RAG, cloud & FinOps, or web and digital applications.",
+    "Hi, I'm the Prama AI concierge. Ask me anything about Services, Solutions and Products of Prama AI.",
 };
 
 function sessionId() {
@@ -51,7 +51,12 @@ export default function ChatPanel() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Chat failed");
       setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
-    } catch {
+    } catch (err) {
+      // Log the real reason for debugging (missing/invalid GROQ_API_KEY,
+      // network failure, etc.) — the chat bubble stays generic and friendly
+      // for the visitor, but this makes the actual cause visible in the
+      // browser console instead of being silently discarded.
+      console.error("[chat] request failed:", err instanceof Error ? err.message : err);
       setMessages((m) => [
         ...m,
         {

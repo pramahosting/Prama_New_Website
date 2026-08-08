@@ -178,6 +178,14 @@ body {
   animation: orbit-spin 3s linear infinite;
 }
 
+@keyframes spin-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.spin-ccw {
+  animation: spin-ccw 4s linear infinite;
+}
+
 @keyframes card-flash-in {
   0% { opacity: 0; transform: translateY(10px) scale(0.96); }
   60% { opacity: 1; transform: translateY(-2px) scale(1.01); }

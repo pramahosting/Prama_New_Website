@@ -30,8 +30,8 @@ export const products: Product[] = [
     name: "AccFino",
     category: "Fintech · Accounting AI",
     emoji: "🧾",
-    logo: "/img/products/accfino.png",
-    logoScale: 1.13,
+    logo: "/img/products/accfino.png?v=10",
+    logoScale: 1.30,
     tagline: "Accounting that thinks ahead of your books",
     summary:
       "An AI-native accounting platform for Australian small business — reconciliation, cash-flow forecasting, capital gains and smart lending analysis in one login.",
@@ -96,7 +96,7 @@ export const products: Product[] = [
     name: "TalentIQ",
     category: "HR Tech · Talent Intelligence",
     emoji: "⚡",
-    logo: "/img/products/talentiq.png",
+    logo: "/img/products/talentiq.png?v=11",
     logoScale: 1,
     tagline: "AI-powered job hunting and candidate intelligence",
     summary:
@@ -161,7 +161,7 @@ export const products: Product[] = [
     name: "MindKaar",
     category: "Wellbeing · Applied AI",
     emoji: "🧠",
-    logo: "/img/products/mindkaar.png",
+    logo: "/img/products/mindkaar.png?v=11",
     logoScale: 1,
     tagline: "A mind gym for everyday mental fitness",
     summary:
