@@ -25,10 +25,10 @@ const aboutStats = [
 ];
 
 const process = [
-  { step: "Discover", detail: "We assess your data, capability and the decision you actually need to make." },
-  { step: "Architect", detail: "A target architecture and roadmap, sized to your team and timeline." },
-  { step: "Build", detail: "IP-rich accelerators and reusable ML models cut delivery effort by 30–40%." },
-  { step: "Run", detail: "We stay accountable for outcomes — monitoring impact, not just shipping code." },
+  { step: "Discover", icon: "Search", detail: "We assess your data, capability and the decision you actually need to make." },
+  { step: "Architect", icon: "Compass", detail: "A target architecture and roadmap, sized to your team and timeline." },
+  { step: "Build", icon: "Cog", detail: "IP-rich accelerators and reusable ML models cut delivery effort by 30–40%." },
+  { step: "Run", icon: "TrendingUp", detail: "We stay accountable for outcomes — monitoring impact, not just shipping code." },
 ];
 
 export default function Home() {
@@ -184,14 +184,32 @@ export default function Home() {
             to drift.
           </p>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-4">
-            {process.map((p, i) => (
-              <div key={p.step} className="border-t-2 border-brass/50 pt-5">
-                <span className="font-mono text-xs text-slate-dim">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-2 font-display text-xl text-paper">{p.step}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate">{p.detail}</p>
-              </div>
-            ))}
+          <div className="relative mt-14">
+            {/* Connecting flow line behind the badges (desktop only) */}
+            <div className="pointer-events-none absolute left-7 right-7 top-7 hidden h-px bg-line md:block" aria-hidden />
+
+            <div className="relative grid gap-10 md:grid-cols-4 md:gap-8">
+              {process.map((p, i) => {
+                const Icon = getIcon(p.icon);
+                const tileClass = TILE_CLASSES[i % TILE_CLASSES.length];
+                return (
+                  <div key={p.step} className="group relative">
+                    <div className="flex items-center gap-3 md:block">
+                      <div
+                        className={`tile-icon ${tileClass} relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl shadow-md transition-transform group-hover:scale-105`}
+                      >
+                        <Icon size={22} strokeWidth={1.75} />
+                      </div>
+                      <span className="font-mono text-xs text-slate-dim md:absolute md:-top-1 md:left-16">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 font-display text-xl text-paper">{p.step}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate">{p.detail}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

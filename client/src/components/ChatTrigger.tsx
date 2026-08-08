@@ -18,7 +18,9 @@ export default function ChatTrigger({ className = "" }: { className?: string }) 
           {open ? <X size={16} strokeWidth={2.25} /> : <MessageCircle size={16} strokeWidth={2.25} />}
         </span>
         {!open && (
-          <span className="flash-dot absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#10182b] bg-emerald-400" />
+          <span className="orbit-ring pointer-events-none absolute inset-0" aria-hidden="true">
+            <span className="flash-dot absolute left-1/2 top-0 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#10182b] bg-emerald-400" />
+          </span>
         )}
       </span>
       {open ? "Close" : "Ask Prama AI"}

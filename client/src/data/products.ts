@@ -7,6 +7,7 @@ export type Product = {
   description: string[];
   url: string;
   accent: string; // hex
+  emoji: string; // shown consistently everywhere this product appears
   badges: string[]; // short capability pills, hero-style
   stats: { value: string; label: string }[]; // 3-stat highlight strip
   features: { title: string; detail: string }[];
@@ -20,6 +21,7 @@ export const products: Product[] = [
     slug: "accfino",
     name: "AccFino",
     category: "Fintech · Accounting AI",
+    emoji: "💰",
     tagline: "Accounting that thinks ahead of your books",
     summary:
       "An AI-native accounting platform for Australian small business — reconciliation, cash-flow forecasting, and crypto CGT in one login.",
@@ -48,6 +50,7 @@ export const products: Product[] = [
     slug: "talentiq",
     name: "TalentIQ",
     category: "HR Tech · Talent Intelligence",
+    emoji: "🎯",
     tagline: "AI-powered job hunting and candidate intelligence",
     summary:
       "A talent intelligence platform that pairs job-market analytics with AI-assisted candidate search, built for recruiters and job seekers alike.",
@@ -74,6 +77,7 @@ export const products: Product[] = [
     slug: "mindkaar",
     name: "MindKaar",
     category: "Wellbeing · Applied AI",
+    emoji: "🧘",
     tagline: "A mind gym for everyday mental fitness",
     summary:
       "A guided mental-fitness platform — structured exercises and progress tracking that treat the mind like something you train, not just something you rest.",

@@ -26,6 +26,7 @@ type Card =
       name: string;
       category: string;
       accent: string;
+      emoji: string;
       offerings: string[];
     };
 
@@ -46,6 +47,7 @@ const cards: Card[] = [
     name: p.name,
     category: p.category,
     accent: p.accent,
+    emoji: p.emoji,
     offerings: p.badges.slice(0, 3),
   })),
 ];
@@ -115,14 +117,13 @@ export default function LiveCapabilityWindow() {
             </div>
           ) : (
             <span
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-lg font-semibold"
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border text-2xl"
               style={{
                 background: `${accent}1a`,
                 borderColor: `${accent}55`,
-                color: accent,
               }}
             >
-              {card.name.slice(0, 1)}
+              {(card as Extract<Card, { kind: "product" }>).emoji}
             </span>
           )}
           <div className="min-w-0 flex-1">

@@ -44,7 +44,10 @@ export default function ProductDetail() {
             ← Portfolio
           </Link>
 
-          <span className="mt-6 inline-block font-mono text-[11px] uppercase tracking-wider text-white/70">
+          <div className="mt-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-3xl backdrop-blur" aria-hidden>
+            {product.emoji}
+          </div>
+          <span className="mt-4 inline-block font-mono text-[11px] uppercase tracking-wider text-white/70">
             {product.category}
           </span>
 

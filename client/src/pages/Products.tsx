@@ -63,7 +63,10 @@ export default function Products() {
             style={{ background: `linear-gradient(135deg, ${featured.accent} 0%, #0f1626 140%)` }}
           >
             <div className="max-w-2xl">
-              <span className="font-mono text-[11px] uppercase tracking-wider text-white/70">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-3xl backdrop-blur" aria-hidden>
+                {featured.emoji}
+              </div>
+              <span className="mt-4 block font-mono text-[11px] uppercase tracking-wider text-white/70">
                 {featured.category}
               </span>
               <h2 className="mt-3 font-display text-4xl text-white sm:text-5xl">{featured.name}</h2>
