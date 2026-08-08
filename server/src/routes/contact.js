@@ -5,6 +5,63 @@ const router = Router();
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const TO_EMAIL = process.env.TO_EMAIL || "info@prama-ai.com";
+
+// Sends the actual notification email via Resend's REST API (no extra
+// dependency needed — same native fetch pattern already used for Groq in
+// chat.js). Optional by design: if RESEND_API_KEY isn't set, the lead is
+// still saved to the database (or logged) below, just without an email
+// alert, so the form keeps working before Resend is configured.
+async function sendNotificationEmail({ name, email, company, interest, message, sourcePage }) {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("[contact] RESEND_API_KEY not set — skipping email notification.");
+    return;
+  }
+  const fromAddress = process.env.FROM_EMAIL || "Prama AI Website <onboarding@resend.dev>";
+
+  const html = `
+    <h2>New enquiry from prama-ai.com</h2>
+    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
+    ${interest ? `<p><strong>Interested in:</strong> ${escapeHtml(interest)}</p>` : ""}
+    ${sourcePage ? `<p><strong>Submitted from:</strong> ${escapeHtml(sourcePage)}</p>` : ""}
+    <p><strong>Message:</strong></p>
+    <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+  `;
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: fromAddress,
+        to: TO_EMAIL,
+        reply_to: email,
+        subject: `New enquiry from ${name}${company ? ` (${company})` : ""}`,
+        html,
+      }),
+    });
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("[contact] Resend API error:", response.status, errText);
+    }
+  } catch (err) {
+    console.error("[contact] email send failed:", err.message);
+  }
+}
+
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 router.post("/contact", async (req, res) => {
   const { name, email, company, interest, message, sourcePage } = req.body ?? {};
 
@@ -14,6 +71,10 @@ router.post("/contact", async (req, res) => {
   if (String(name).length > 200 || String(message).length > 5000) {
     return res.status(400).json({ error: "Input too long." });
   }
+
+  // Fire off the email notification — don't let a slow/failed email block
+  // saving the lead, and vice versa; both happen independently below.
+  sendNotificationEmail({ name, email, company, interest, message, sourcePage });
 
   const pool = getPool();
   if (!pool) {
