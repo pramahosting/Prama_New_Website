@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import SEO from "../components/SEO";
 import { getProduct, products } from "../data/products";
 import { site } from "../data/site";
+import { getIcon } from "../lib/icons";
 import NotFound from "./NotFound";
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const product = getProduct(slug ?? "");
+  const [logoOk, setLogoOk] = useState(true);
 
   if (!product) return <NotFound />;
 
@@ -44,9 +47,23 @@ export default function ProductDetail() {
             ← Portfolio
           </Link>
 
-          <div className="mt-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-3xl backdrop-blur" aria-hidden>
-            {product.emoji}
-          </div>
+          {logoOk ? (
+            <img
+              src={product.logo}
+              alt={`${product.name} logo`}
+              className="mt-6 h-14 w-14 object-contain"
+              style={{ transform: `scale(${product.logoScale})` }}
+              onError={() => setLogoOk(false)}
+            />
+          ) : (
+            <div
+              className="mt-6 flex h-14 w-14 items-center justify-center rounded-2xl text-3xl shadow-md"
+              style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
+              aria-hidden
+            >
+              {product.emoji}
+            </div>
+          )}
           <span className="mt-4 inline-block font-mono text-[11px] uppercase tracking-wider text-white/70">
             {product.category}
           </span>
@@ -102,7 +119,7 @@ export default function ProductDetail() {
               </p>
             ))}
 
-            <h2 className="mt-10 font-display text-2xl text-paper">Inside the platform</h2>
+            <h2 className="mt-10 font-display text-2xl text-paper">Main functions</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {product.features.map((f) => (
                 <div key={f.title} className="rounded-xl border hairline bg-ink-2 p-5">
@@ -110,6 +127,28 @@ export default function ProductDetail() {
                   <p className="mt-2 text-sm leading-relaxed text-slate">{f.detail}</p>
                 </div>
               ))}
+            </div>
+
+            <h2 className="mt-12 font-display text-2xl text-paper">Technical deep dive</h2>
+            <p className="mt-2 text-sm text-slate">
+              How {product.name} actually works — what's genuinely distinctive about its AI, data and architecture.
+            </p>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              {product.technical.map((t) => {
+                const Icon = getIcon(t.icon);
+                return (
+                  <div key={t.title} className="rounded-2xl border hairline bg-ink-2 p-5">
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm"
+                      style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
+                    >
+                      <Icon size={18} className="text-white" strokeWidth={1.75} />
+                    </div>
+                    <h3 className="mt-4 font-display text-lg text-paper">{t.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate">{t.detail}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

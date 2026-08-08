@@ -19,6 +19,9 @@ import {
   Globe,
   ShoppingCart,
   TrendingUp,
+  FileText,
+  Mic,
+  GitBranch,
   type LucideIcon,
 } from "lucide-react";
 
@@ -43,6 +46,9 @@ export const iconMap: Record<string, LucideIcon> = {
   Globe,
   ShoppingCart,
   TrendingUp,
+  FileText,
+  Mic,
+  GitBranch,
 };
 
 export function getIcon(name?: string): LucideIcon {

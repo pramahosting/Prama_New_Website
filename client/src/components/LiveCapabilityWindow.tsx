@@ -29,6 +29,8 @@ type Card =
       badgeColor: string;
       badgeColorDark: string;
       emoji: string;
+      logo: string;
+      logoScale: number;
       offerings: string[];
     };
 
@@ -52,6 +54,8 @@ const cards: Card[] = [
     badgeColor: p.badgeColor,
     badgeColorDark: p.badgeColorDark,
     emoji: p.emoji,
+    logo: p.logo,
+    logoScale: p.logoScale,
     offerings: p.badges.slice(0, 3),
   })),
 ];
@@ -61,6 +65,7 @@ const productCount = products.length;
 
 export default function LiveCapabilityWindow() {
   const [step, setStep] = useState(0);
+  const [failedLogos, setFailedLogos] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const id = setInterval(() => setStep((s) => (s + 1) % cards.length), CYCLE_MS);
@@ -120,14 +125,25 @@ export default function LiveCapabilityWindow() {
               {Icon && <Icon size={24} strokeWidth={1.75} />}
             </div>
           ) : (
-            <span
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl shadow-md"
-              style={{
-                background: `linear-gradient(135deg, ${(card as Extract<Card, { kind: "product" }>).badgeColor}, ${(card as Extract<Card, { kind: "product" }>).badgeColorDark})`,
-              }}
-            >
-              {(card as Extract<Card, { kind: "product" }>).emoji}
-            </span>
+            (() => {
+              const productCard = card as Extract<Card, { kind: "product" }>;
+              return failedLogos.has(productCard.key) ? (
+                <span
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl shadow-md"
+                  style={{ background: `linear-gradient(135deg, ${productCard.badgeColor}, ${productCard.badgeColorDark})` }}
+                >
+                  {productCard.emoji}
+                </span>
+              ) : (
+                <img
+                  src={productCard.logo}
+                  alt={`${productCard.name} logo`}
+                  className="h-14 w-14 shrink-0 object-contain"
+                  style={{ transform: `scale(${productCard.logoScale})` }}
+                  onError={() => setFailedLogos((prev) => new Set(prev).add(productCard.key))}
+                />
+              );
+            })()
           )}
           <div className="min-w-0 flex-1">
             <div className="font-mono text-[10px] uppercase tracking-wider" style={{ color: accent }}>

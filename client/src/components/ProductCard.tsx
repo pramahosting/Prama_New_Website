@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import type { Product } from "../data/products";
 
 export default function ProductCard({ product }: { product: Product }) {
+  const [logoOk, setLogoOk] = useState(true);
+
   return (
     <Link
       to={`/products/${product.slug}`}
@@ -22,13 +25,23 @@ export default function ProductCard({ product }: { product: Product }) {
           at the same position across cards, regardless of summary length. */}
       <div className="relative flex-1">
         <div className="flex items-center justify-between">
-          <div
-            className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-md"
-            style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
-            aria-hidden
-          >
-            {product.emoji}
-          </div>
+          {logoOk ? (
+            <img
+              src={product.logo}
+              alt={`${product.name} logo`}
+              className="h-12 w-12 object-contain"
+              style={{ transform: `scale(${product.logoScale})` }}
+              onError={() => setLogoOk(false)}
+            />
+          ) : (
+            <div
+              className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl shadow-md"
+              style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
+              aria-hidden
+            >
+              {product.emoji}
+            </div>
+          )}
           <span className="font-mono text-[11px] uppercase tracking-wider text-slate-dim">
             {product.category}
           </span>
