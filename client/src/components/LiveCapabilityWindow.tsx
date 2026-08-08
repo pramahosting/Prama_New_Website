@@ -70,11 +70,11 @@ export default function LiveCapabilityWindow() {
 
   return (
     <div className="window-glossy flex h-full w-full max-w-md flex-col overflow-hidden rounded-2xl border border-white/25 bg-[#eaf3fc]">
-      {/* Window chrome — vibrant gradient header */}
+      {/* Window chrome — vibrant gradient header, classic traffic-light dots */}
       <div className="gradient-panel flex items-center gap-2 px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-white/90" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/60" />
-        <span className="h-2.5 w-2.5 rounded-full bg-white/35" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
         <span className="ml-3 truncate font-mono text-[11px] uppercase tracking-wider text-white/85">
           prama-ai · live capabilities
         </span>
@@ -133,13 +133,23 @@ export default function LiveCapabilityWindow() {
           </div>
         </div>
 
+        {/* Offering tiles — transparent, single accent colour, glowing outline,
+            each one popping in a beat after the last (sequential reveal). */}
         <div className="mt-4 grid grid-cols-3 gap-2">
           {card.offerings.map((o, i) => (
             <div
               key={o}
-              className={`tile-icon ${TILE_CLASSES[i % TILE_CLASSES.length]} flex min-h-[4.75rem] items-center justify-center rounded-xl p-2 text-center shadow-sm transition-transform hover:scale-[1.03]`}
+              className="tile-pop flex min-h-[4.75rem] items-center justify-center rounded-xl p-2 text-center transition-transform hover:scale-[1.04]"
+              style={{
+                animationDelay: `${i * 0.18}s`,
+                background: `${accent}14`,
+                border: `1px solid ${accent}66`,
+                boxShadow: `0 0 16px ${accent}40, inset 0 0 12px ${accent}1f`,
+              }}
             >
-              <span className="font-display text-[11px] font-semibold leading-tight text-white">{o}</span>
+              <span className="font-display text-[11px] font-semibold leading-tight" style={{ color: accent }}>
+                {o}
+              </span>
             </div>
           ))}
         </div>

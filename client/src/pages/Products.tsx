@@ -52,7 +52,7 @@ export default function Products() {
       </section>
 
       {/* Featured product spotlight */}
-      <section className="container-px mx-auto max-w-7xl py-20">
+      <section className="container-px mx-auto max-w-5xl py-20">
         <span className="font-mono text-[11px] uppercase tracking-wider text-brass">Flagship</span>
         <Link
           to={`/products/${featured.slug}`}
@@ -101,9 +101,9 @@ export default function Products() {
 
       {/* Rest of the portfolio */}
       {rest.length > 0 && (
-        <section className="container-px mx-auto max-w-7xl pb-24">
+        <section className="container-px mx-auto max-w-5xl pb-24">
           <span className="font-mono text-[11px] uppercase tracking-wider text-brass">More from the studio</span>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {rest.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
