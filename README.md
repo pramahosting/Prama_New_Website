@@ -13,7 +13,7 @@ engineering and FinOps. Colour palette matches the current live site's brand blu
 | SEO        | Per-route meta via `react-helmet-async` (client) + server-side head injection (crawlers) + `sitemap.xml` + JSON-LD |
 | Backend    | Node.js + Express 5                                                     |
 | Database   | Neon (serverless Postgres) via `pg`                                     |
-| AI         | "Ask Prama AI" concierge widget, calls Claude (Anthropic API) via `/api/chat`, grounded in a system prompt describing real services/products |
+| AI         | "Ask Prama AI" concierge widget, calls Groq's Llama models via `/api/chat`, grounded in a system prompt describing real services/products |
 | Deployment | Docker (multi-stage) → Northflank                                       |
 
 ```
@@ -54,7 +54,7 @@ Requires Node.js 20+.
 
 ```bash
 npm run install:all   # installs client + server dependencies
-cp server/.env.example server/.env   # then fill in DATABASE_URL / ANTHROPIC_API_KEY
+cp server/.env.example server/.env   # then fill in DATABASE_URL / GROQ_API_KEY
 npm run dev            # runs Vite dev server (client) + Express (server) together
 ```
 
@@ -86,9 +86,11 @@ instead of persisted, so you can deploy the site before the database is wired up
 
 ## Setting up the AI concierge
 
-1. Get an API key from the [Anthropic Console](https://console.anthropic.com).
-2. Set `ANTHROPIC_API_KEY` in `server/.env` (local) or as a Northflank secret (production).
-3. Optional: override the model with `ANTHROPIC_MODEL` (defaults to `claude-sonnet-5`).
+1. Get a free API key from the [Groq Console](https://console.groq.com/keys) — keys start with `gsk_`.
+2. Set `GROQ_API_KEY` in `server/.env` (local) or as a Northflank secret (production).
+3. Optional: override the model with `GROQ_MODEL` (defaults to `openai/gpt-oss-120b`; see
+   [Groq's model list](https://console.groq.com/docs/models) for faster/cheaper alternatives like
+   `llama-3.1-8b-instant`).
 
 If unset, the chat widget stays visible but returns a friendly "not configured yet" message
 instead of erroring — it won't break the rest of the site.
@@ -106,8 +108,8 @@ Northflank just needs to build and run it.
    its own `PORT` env var at runtime, which the server already reads via `process.env.PORT`.
 5. **Add environment variables / secrets** under the service's *Environment* tab:
    - `DATABASE_URL` — your Neon pooled connection string
-   - `ANTHROPIC_API_KEY` — your Anthropic API key
-   - `ANTHROPIC_MODEL` — optional, defaults to `claude-sonnet-5`
+   - `GROQ_API_KEY` — your Groq API key
+   - `GROQ_MODEL` — optional, defaults to `openai/gpt-oss-120b`
 6. **Enable HTTPS + attach your domain**: under *Networking* → *Ports*, expose port 8787
    publicly, then add `www.prama-ai.com` (and `prama-ai.com` with a redirect) as a custom domain
    and point your DNS `CNAME`/`ALIAS` record at the hostname Northflank provides.

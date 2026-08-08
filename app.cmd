@@ -62,7 +62,7 @@ if not exist "server\.env" (
         copy "server\.env.example" "server\.env" >nul
         echo.
         echo A blank server\.env file was created from server\.env.example.
-        echo Open it and add your DATABASE_URL ^(Neon Postgres^) and ANTHROPIC_API_KEY
+        echo Open it and add your DATABASE_URL ^(Neon Postgres^) and GROQ_API_KEY
         echo if you want the contact form and AI concierge to work fully.
         echo The site will still run without them.
         echo.
@@ -75,14 +75,49 @@ call npm run build --prefix client
 if errorlevel 1 goto :fail
 echo.
 
+REM --- Stop any stale server from a previous run still holding the port ---
+REM (if a previous window was closed via the X button instead of Ctrl+C, or
+REM the server crashed without releasing the socket, the next run fails
+REM immediately with "port already in use" — which, combined with the bug
+REM fixed below, used to close this window with no visible error at all.)
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr :8787 ^| findstr LISTENING') do (
+    echo Stopping a previous server still running on port 8787 ^(PID %%p^)...
+    taskkill /PID %%p /F >nul 2>&1
+)
+
 REM --- Start the server ---
 echo Starting Prama AI server on http://localhost:8787
+echo Your browser will open automatically once the server is ready.
 echo Press Ctrl+C in this window to stop the server.
 echo.
 
-start "" http://localhost:8787
+REM Open the browser a few seconds after launch, giving the Node server time
+REM to actually finish starting and bind to the port first. Opening it
+REM immediately (before the server is listening) is a race condition — the
+REM browser hits "can't reach this page" because nothing is serving yet.
+REM This runs as a small detached background timer so it doesn't block the
+REM server itself from starting in the foreground below. Uses "explorer" (not
+REM a nested "start") to hand off the URL to the default browser, since
+REM nested quoted "start" commands inside "cmd /c "...""" are unreliable.
+start "" /min cmd /c "timeout /t 4 /nobreak >nul & explorer http://localhost:8787"
 
 call npm run start --prefix server
+if errorlevel 1 (
+    echo.
+    echo [ERROR] The server exited unexpectedly — see the error above for details.
+    echo.
+    echo Common causes:
+    echo   - DATABASE_URL in server\.env is malformed. It must start with
+    echo     "postgresql://" ^(not "postgresql+asyncpg://" — that "+asyncpg"
+    echo     suffix is a Python/SQLAlchemy convention and does not work with
+    echo     this Node.js server^).
+    echo   - Port 8787 was still in use by another process ^(this script now
+    echo     tries to free it automatically above, but a firewall or
+    echo     antivirus tool could still be blocking it^).
+    echo.
+    pause
+    exit /b 1
+)
 goto :eof
 
 :fail
