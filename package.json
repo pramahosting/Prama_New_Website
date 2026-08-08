@@ -1,0 +1,17 @@
+{
+  "name": "prama-ai-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Prama AI marketing website — React/Vite frontend + Express/Neon Postgres backend.",
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run start --prefix server",
+    "dev": "concurrently -n client,server -c cyan,magenta \"npm:dev:client\" \"npm:dev:server\"",
+    "build": "npm run build --prefix client",
+    "start": "npm run build && npm run start --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

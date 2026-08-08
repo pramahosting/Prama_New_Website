@@ -1,0 +1,50 @@
+import {
+  Bot,
+  SlidersHorizontal,
+  ShieldAlert,
+  Cog,
+  Database,
+  FlaskConical,
+  BarChart3,
+  Compass,
+  ShieldCheck,
+  MessagesSquare,
+  Search,
+  Network,
+  Sparkles,
+  CloudCog,
+  Boxes,
+  Lock,
+  Wallet,
+  Globe,
+  ShoppingCart,
+  TrendingUp,
+  type LucideIcon,
+} from "lucide-react";
+
+export const iconMap: Record<string, LucideIcon> = {
+  Bot,
+  SlidersHorizontal,
+  ShieldAlert,
+  Cog,
+  Database,
+  FlaskConical,
+  BarChart3,
+  Compass,
+  ShieldCheck,
+  MessagesSquare,
+  Search,
+  Network,
+  Sparkles,
+  CloudCog,
+  Boxes,
+  Lock,
+  Wallet,
+  Globe,
+  ShoppingCart,
+  TrendingUp,
+};
+
+export function getIcon(name?: string): LucideIcon {
+  return (name && iconMap[name]) || Sparkles;
+}
