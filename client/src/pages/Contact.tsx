@@ -1,4 +1,4 @@
-import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { Mail, MapPin, MessageCircle, CalendarClock } from "lucide-react";
 import SEO from "../components/SEO";
 import ContactForm from "../components/ContactForm";
 import { site } from "../data/site";
@@ -22,6 +22,16 @@ export default function Contact() {
             Thank you for your interest in Prama AI. Fill out the form and we'll get back to you
             within one business day.
           </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a
+              href={site.bookingUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="rounded-full bg-brass px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
+            >
+              Book a discovery call
+            </a>
+          </div>
         </div>
       </section>
 
@@ -48,6 +58,26 @@ export default function Contact() {
                 <div>
                   <h3 className="font-mono text-[11px] uppercase tracking-wider text-slate-dim">Office</h3>
                   <p className="mt-1 font-display text-lg text-paper">{site.address}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 rounded-2xl border hairline bg-ink-2 p-5">
+                <div className="tile-icon tile-3 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-sm">
+                  <CalendarClock size={20} strokeWidth={1.75} />
+                </div>
+                <div>
+                  <h3 className="font-mono text-[11px] uppercase tracking-wider text-slate-dim">Skip the form</h3>
+                  <p className="mt-1 text-sm text-slate">
+                    Pick a time that suits you and we'll call you directly.
+                  </p>
+                  <a
+                    href={site.bookingUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="mt-3 inline-block rounded-full bg-brass px-5 py-2.5 font-mono text-[12px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
+                  >
+                    Book a discovery call
+                  </a>
                 </div>
               </div>
 
