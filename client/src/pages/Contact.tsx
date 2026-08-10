@@ -1,9 +1,49 @@
+import { useEffect } from "react";
 import { Mail, MapPin, MessageCircle, CalendarClock } from "lucide-react";
 import SEO from "../components/SEO";
 import ContactForm from "../components/ContactForm";
 import { site } from "../data/site";
 
+// Calendly's global object, attached to window once its widget script loads.
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
+const CALENDLY_CSS = "https://assets.calendly.com/assets/external/widget.css";
+const CALENDLY_JS = "https://assets.calendly.com/assets/external/widget.js";
+
 export default function Contact() {
+  // Load Calendly's popup-widget script once, only on this page, so the
+  // booking buttons below can open it as an overlay instead of a new tab.
+  useEffect(() => {
+    if (!document.querySelector(`link[href="${CALENDLY_CSS}"]`)) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = CALENDLY_CSS;
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector(`script[src="${CALENDLY_JS}"]`)) {
+      const script = document.createElement("script");
+      script.src = CALENDLY_JS;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  function openBookingPopup(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (window.Calendly) {
+      e.preventDefault();
+      window.Calendly.initPopupWidget({ url: site.bookingUrl });
+    }
+    // If the script hasn't finished loading yet, the click falls through to
+    // the normal href and opens Calendly in a new tab instead — so the
+    // button always works, popup or not.
+  }
+
   return (
     <>
       <SEO
@@ -27,6 +67,7 @@ export default function Contact() {
               href={site.bookingUrl}
               target="_blank"
               rel="noreferrer noopener"
+              onClick={openBookingPopup}
               className="rounded-full bg-brass px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
             >
               Book a discovery call
@@ -74,6 +115,7 @@ export default function Contact() {
                     href={site.bookingUrl}
                     target="_blank"
                     rel="noreferrer noopener"
+                    onClick={openBookingPopup}
                     className="mt-3 inline-block rounded-full bg-brass px-5 py-2.5 font-mono text-[12px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
                   >
                     Book a discovery call
@@ -104,3 +146,4 @@ export default function Contact() {
     </>
   );
 }
+
