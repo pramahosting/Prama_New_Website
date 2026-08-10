@@ -25,13 +25,14 @@ IP-rich accelerators and reusable ML models that save 30-40% of delivery effort 
 from scratch.
 
 PRODUCT PORTFOLIO (live products built and run by Prama AI):
-- AccFino (www.accfino.com): AI-native accounting platform for Australian small business — Groq
+- AccFino (www.accfino.com): AI-native Accounting & Finance platform for SME — Groq
   LLM + Ripple Down Rules bank reconciliation, a leaderboard of ML models for cash-flow
   forecasting, crypto & equity CGT, open banking, and smart lending readiness analysis. Grew out
   of Prama AI's earlier SAAR expense-classification engine.
-- TalentIQ (talentiq.prama-ai.com): three AI agents in one platform — JobHunt (resume-to-job
-  matching with ATS scoring), JobIntel (a LangChain market-intelligence agent), and LinkLens
-  (LinkedIn candidate search at scale via Playwright).
+- TalentIQ (talentiq.prama-ai.com): six modules split by user — two for individuals (CVAnalysis
+  for resume review, Jobhunter for live job matching) and four for businesses (MarketIntel for
+  live salary/demand data, Linkexplore for LinkedIn sourcing, JD Creator for job descriptions,
+  Candidatelens for detailed candidate evaluation).
 - MindKaar (mindkaar.prama-ai.com): a "mind gym" — a deterministic 6-domain wellbeing assessment
   paired with progressive mini-games, plus a live voice-roleplay simulation with an emotionally
   reactive AI character.
@@ -77,12 +78,12 @@ const FALLBACK_ANSWERS = [
   {
     keywords: ["accfino"],
     answer:
-      "AccFino (www.accfino.com) is our AI-native accounting platform for Australian small business — AI bank reconciliation, ML cash-flow forecasting, crypto & equity CGT, open banking, and smart lending analysis.",
+      "AccFino (www.accfino.com) is our AI-native Accounting & Finance platform built for SME — AI bank reconciliation, ML cash-flow forecasting, crypto & equity CGT, open banking, and smart lending analysis.",
   },
   {
     keywords: ["talentiq"],
     answer:
-      "TalentIQ (talentiq.prama-ai.com) is our talent-intelligence platform: JobHunt (resume-to-job matching), JobIntel (market-intelligence agent), and LinkLens (LinkedIn candidate search).",
+      "TalentIQ (talentiq.prama-ai.com) is our talent-intelligence platform with six modules: CVAnalysis and Jobhunter for individual job seekers; MarketIntel, Linkexplore, JD Creator and Candidatelens for businesses hiring.",
   },
   {
     keywords: ["mindkaar", "mind gym"],
