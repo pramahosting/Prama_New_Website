@@ -14,7 +14,7 @@ export const site = {
   // type, no cost. Sign up free at https://calendly.com, create a "Discovery
   // Call" event type, then replace this placeholder with your real link
   // (Account → Event Types → the event's own page → Copy link).
-    bookingUrl: "https://calendly.com/pramahosting/30min",
+    bookingUrl: "https://calendly.com/prama-ai/30min",
 };
 
 export const navLinks = [
