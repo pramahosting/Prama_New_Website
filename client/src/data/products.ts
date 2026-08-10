@@ -103,7 +103,7 @@ export const products: Product[] = [
     name: "TalentIQ",
     category: "HR Tech · Talent Intelligence",
     emoji: "⚡",
-    logo: "/img/products/talentiq.png?v=12",
+    logo: "/img/products/talentiq.png?v=13",
     logoScale: 1,
     tagline: "AI-powered job hunting and candidate intelligence",
     summary:
@@ -116,8 +116,8 @@ export const products: Product[] = [
     url: "https://talentiq.prama-ai.com",
     accent: "#2a4a8f",
     accentDark: "#122140",
-    badgeColor: "#3689ed",
-    badgeColorDark: "#1b4476",
+    badgeColor: "#5ee8db",
+    badgeColorDark: "#00c7b7",
     badges: ["CVAnalysis", "Jobhunter", "MarketIntel", "Linkexplore", "JD Creator", "Candidatelens"],
     stats: [
       { value: "6", label: "Modules — 2 individual, 4 business" },
