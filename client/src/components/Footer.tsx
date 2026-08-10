@@ -95,9 +95,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <Link to="/contact" className="transition-colors hover:text-paper">
+                <a href={site.bookingUrl} target="_blank" rel="noreferrer noopener" className="transition-colors hover:text-paper">
                   Book a discovery call
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

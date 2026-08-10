@@ -39,8 +39,9 @@ export default function Products() {
             We don't just consult on AI. <span className="text-brass-light">We ship it.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/80">
-            Every product below is live, in front of real users, built on the same architecture and
-            delivery discipline we bring to enterprise clients — proof, not a pitch deck.
+            Every product below is live, in front of real users. Each one is built on its own
+            architecture, chosen for what that product actually needs — but all three share the
+            same delivery discipline we bring to enterprise clients — proof, not a pitch deck.
           </p>
           <div className="mt-8">
             <Link
@@ -86,6 +87,16 @@ export default function Products() {
                 {featured.category}
               </span>
               <h2 className="mt-3 font-display text-4xl text-white sm:text-5xl">{featured.name}</h2>
+              <span
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(featured.url, "_blank", "noopener,noreferrer");
+                }}
+                className="mt-1 inline-block font-mono text-[12px] text-white/70 hover:text-white hover:underline"
+              >
+                {featured.url.replace(/^https?:\/\//, "")}
+              </span>
               <p className="mt-2 font-display text-xl text-white/85">{featured.tagline}</p>
               <p className="mt-4 text-sm leading-relaxed text-white/75">{featured.summary}</p>
 

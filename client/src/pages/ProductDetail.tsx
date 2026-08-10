@@ -87,7 +87,8 @@ export default function ProductDetail() {
               href={product.url}
               target="_blank"
               rel="noreferrer noopener"
-              className="rounded-full bg-brass px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
+              style={{ background: `linear-gradient(135deg, ${product.badgeColor}, ${product.badgeColorDark})` }}
+              className="rounded-full px-7 py-3.5 font-mono text-[13px] font-bold uppercase tracking-wider text-white shadow-lg transition-transform hover:scale-105"
             >
               Visit {product.name} ↗
             </a>

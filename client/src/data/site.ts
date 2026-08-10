@@ -11,10 +11,9 @@ export const site = {
   founded: 2018,
   logo: "/img/company_logo_tr.png",
   // Calendly's free plan covers this fully: unlimited bookings on one event
-  // type, no cost. Sign up free at https://calendly.com, create a "Discovery
-  // Call" event type, then replace this placeholder with your real link
-  // (Account → Event Types → the event's own page → Copy link).
-    bookingUrl: "https://calendly.com/prama-ai/30min",
+  // type, no cost. To change the event or availability, log in to Calendly
+  // and edit the "30min" event under Scheduling → Event types.
+  bookingUrl: "https://calendly.com/pramahosting/30min",
 };
 
 export const navLinks = [

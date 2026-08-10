@@ -48,12 +48,22 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
 
         <h3 className="mt-4 font-display text-2xl text-paper">{product.name}</h3>
-        <p className="mt-1 font-display text-base text-slate">{product.tagline}</p>
+        <span
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(product.url, "_blank", "noopener,noreferrer");
+          }}
+          className="mt-0.5 inline-block font-mono text-[11px] text-brass-light hover:underline"
+        >
+          {product.url.replace(/^https?:\/\//, "")}
+        </span>
+        <p className="mt-2 font-display text-base text-slate">{product.tagline}</p>
         <p className="mt-3 text-sm leading-relaxed text-slate">{product.summary}</p>
       </div>
 
       <div className="relative mt-5 flex flex-wrap gap-1.5">
-        {product.badges.slice(0, 3).map((b) => (
+        {product.badges.map((b) => (
           <span
             key={b}
             className="rounded-full px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-white"

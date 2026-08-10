@@ -260,12 +260,14 @@ export default function Home() {
               or a bigger conversation.
             </p>
           </div>
-          <Link
-            to="/contact"
+          <a
+            href={site.bookingUrl}
+            target="_blank"
+            rel="noreferrer noopener"
             className="shrink-0 rounded-full bg-brass px-8 py-4 font-mono text-[13px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-brass-light"
           >
             Book a discovery call
-          </Link>
+          </a>
         </div>
       </section>
     </>
