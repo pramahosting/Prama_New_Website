@@ -171,9 +171,9 @@ export const products: Product[] = [
     name: "MindKaar",
     category: "Wellbeing · Applied AI",
     emoji: "🧠",
-    logo: "/img/products/mindkaar.png?v=12",
+    logo: "/img/products/mindkaar.png?v=13",
     logoScale: 1,
-    tagline: "A mind gym for everyday mental fitness",
+    tagline: "Train your mind like it's a muscle",
     summary:
       "A mental-wellness platform pairing a deterministic 6-domain assessment with progressive mini-games, plus a live voice-roleplay simulation with an emotionally reactive AI character.",
     description: [
@@ -184,8 +184,8 @@ export const products: Product[] = [
     url: "https://mindkaar.prama-ai.com",
     accent: "#4d68ad",
     accentDark: "#222e4d",
-    badgeColor: "#3eb3d6",
-    badgeColorDark: "#7f69f1",
+    badgeColor: "#FFC857",
+    badgeColorDark: "#D68A1F",
     badges: [
       "Guided Assessment",
       "Progressive Mini-Games",
