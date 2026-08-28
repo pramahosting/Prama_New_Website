@@ -13,7 +13,7 @@ export const site = {
   // Calendly's free plan covers this fully: unlimited bookings on one event
   // type, no cost. To change the event or availability, log in to Calendly
   // and edit the "30min" event under Scheduling → Event types.
-  bookingUrl: "https://calendly.com/pramahosting/30min",
+  bookingUrl: "https://calendly.com/prama-ai/30min",
 };
 
 export const navLinks = [
