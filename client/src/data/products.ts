@@ -238,6 +238,79 @@ export const products: Product[] = [
     ],
     stack: ["React", "FastAPI", "Groq LLM", "Web Speech API", "SQLite / Neon Postgres", "JWT + bcrypt"],
   },
+  {
+    slug: "isift",
+    name: "iSift",
+    category: "Collaboration · Meetings & Workspace",
+    emoji: "☀️",
+    logo: "/img/products/isift.png?v=1",
+    logoScale: 1,
+    tagline: "One app for every client meeting",
+    summary:
+      "Video meetings, AI minutes you approve, mail, calendar, documents and PDF signing in one account — so the work that follows a meeting is already sorted when the call ends.",
+    description: [
+      "iSift is a web app that brings video meetings, AI-drafted minutes, mail, calendar, documents, whiteboard and PDF signing together in a single account, instead of six separate tools. Guests join free from a link in their browser, with no app to install and no account to create.",
+      "When a meeting ends, minutes are drafted from the transcript and a person reviews them before they go out. Every action item gets an owner and a due date, and a morning briefing summarises what is on today and what is still open.",
+      "Around the meeting sit booking pages, webinars, a podcast studio, your own email address for invitations, connected Google, Microsoft, Yahoo and iCloud calendars, and document and media conversion — all linked back to the meeting they belong to.",
+    ],
+    url: "https://www.isift.au",
+    accent: "#1f3a4d",
+    accentDark: "#10202c",
+    badgeColor: "#FFC857",
+    badgeColorDark: "#D68A1F",
+    badges: [
+      "Video Meetings",
+      "AI Minutes You Approve",
+      "Booking Pages",
+      "Mail & Calendar",
+      "Documents & Whiteboard",
+      "PDF Signing",
+    ],
+    stats: [
+      { value: "90 min", label: "Free group meetings, guests join free" },
+      { value: "1", label: "Account for meetings, mail, docs and signing" },
+      { value: "4", label: "Calendars connected — Google, Microsoft, Yahoo, iCloud" },
+    ],
+    features: [
+      { title: "AI minutes you approve", detail: "Minutes and action items are drafted from the transcript by a Groq-hosted model; a person reviews and approves before anything is sent." },
+      { title: "Follow-through, not just a summary", detail: "Action items carry an owner and due date, and a morning briefing shows what is on today and what is still open." },
+      { title: "One workspace, not six tabs", detail: "Meetings, booking pages, mail, calendar, notes, whiteboard and PDF signing, all signed in once and linked to the meeting they belong to." },
+      { title: "Guests join free", detail: "Anyone can join from a link in their browser — no app to install and no account to create." },
+    ],
+    technical: [
+      {
+        title: "Human-in-the-Loop AI Minutes",
+        icon: "Sparkles",
+        detail: "Groq produces typed, structured JSON minutes with evidence fields from the meeting transcript; recordings are transcribed with Whisper. Drafts are versioned and held for human review, so nothing is sent without approval.",
+      },
+      {
+        title: "Scheduled Calendar Sync",
+        icon: "Network",
+        detail: "A background worker refreshes each person's calendar from their own mailbox on a schedule and when the date changes, adding, updating and removing meetings. Private, cancelled and all-day events are never stored.",
+      },
+      {
+        title: "Document & PDF Toolkit",
+        icon: "FileText",
+        detail: "Built-in document conversion and editing plus PDF signing, so contracts and minutes are handled beside the meeting rather than in separate apps.",
+      },
+      {
+        title: "Tenant-Isolated by Design",
+        icon: "ShieldCheck",
+        detail: "Each person sees only their own meetings, transcripts, minutes and actions; administrator tools are role-gated, and disabled accounts are refused on every request.",
+      },
+      {
+        title: "Database-Backed Job Queue",
+        icon: "Database",
+        detail: "Jobs are claimed atomically with retries, so several workers can run without processing anything twice. SQLite for local evaluation, PostgreSQL (e.g. Neon) in production.",
+      },
+      {
+        title: "Container Deployment",
+        icon: "CloudCog",
+        detail: "A single Docker image serves the FastAPI backend and the built React frontend, deployable on Northflank with PostgreSQL and object storage for recordings.",
+      },
+    ],
+    stack: ["React", "TypeScript", "Vite", "FastAPI", "SQLAlchemy 2.0", "Groq LLM + Whisper", "PostgreSQL / Neon", "Docker"],
+  },
 ];
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
