@@ -22,6 +22,13 @@ const products = [
     summary:
       "A guided mental-fitness platform — structured exercises and adaptive progress tracking.",
   },
+  {
+    slug: "isift",
+    name: "iSift",
+    tagline: "One app for every client meeting",
+    summary:
+      "Video meetings, AI minutes you approve, mail, documents and PDF signing in one account — with free 90-minute meetings and free guests.",
+  },
 ];
 
 export const staticRoutes = [
